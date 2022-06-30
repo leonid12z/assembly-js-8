@@ -8,7 +8,7 @@ const CounterPlugin = function ({
    this._refs = this._getRefs(rootSelector);
 
    this._bindEvents();
-   this._updateValueUI();
+   this.updateValueUI();
 };
 
 CounterPlugin.prototype._getRefs = function (rootSelector) {
@@ -25,15 +25,29 @@ CounterPlugin.prototype._bindEvents = function () {
    this._refs.incrementBtn.addEventListener('click', () => {
       console.log('CounterPlugin.prototype._bindEvents -> this', this);
       this.increment();
+      this.updateValueUI();
    });
 
    
    this._refs.decrementBtn.addEventListener('click', () => {
       console.log('CounterPlugin.prototype._bindEvents -> this', this);
       this.decrement();
+      this.updateValueUI();
    });
+};
+
+CounterPlugin.prototype.updateValueUI = function () {
+   this._refs.value.textContent = this._value;
+};
+
+CounterPlugin.prototype.increment = function () {
+   this._value += this._step;
+};
+
+CounterPlugin.prototype.decrement = function () {
+  this._value -= this._step;
 };
 
 new CounterPlugin({ rootSelector: '#counter-1', step: 10, initialValue: 100 });
 
-new CounterPlugin({ rootSelector: "#counter-2", step: 5 });
+new CounterPlugin({ rootSelector: '#counter-2', step: 5 });
